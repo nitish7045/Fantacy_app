@@ -1,56 +1,60 @@
-// server.js (or route handling file)
-
 const express = require('express');
-const bcrypt = require('bcrypt');  // For password hashing
-const User = require('./models/User');  // Assuming you have a User model to interact with MongoDB
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
-
-// Middleware
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-// Default route
-app.get("/", (req, res) => {
-    res.send("Fantasy Sports Backend is Running! 🚀");
+// MongoDB Atlas Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB Atlas'))
+.catch(err => console.error('Connection error:', err));
+
+// User Schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
-// Register route
-app.post("/register", async (req, res) => {
-  const { fullName, email, phone, password, age } = req.body;
+const User = mongoose.model('User', userSchema);
 
-  // Input validation
-  if (!fullName || !email || !phone || !password || !age) {
-    return res.status(400).json({ error: "All fields are required." });
-  }
-
-  // Check if user already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return res.status(400).json({ error: "Email already registered." });
-  }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create a new user
-  const newUser = new User({
-    fullName,
-    email,
-    phone,
-    password: hashedPassword,
-    age,
-  });
-
+// Register Endpoint
+app.post('/register', async (req, res) => {
   try {
-    await newUser.save();
-    res.status(201).json({ message: "User registered successfully!" });
+    const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ username, password: hashedPassword });
+    await user.save();
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).json({ error: "Server error, please try again later." });
+    res.status(500).json({ error: 'Error registering user' });
   }
 });
 
-// Server listening
+// Login Endpoint
+app.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) return res.status(400).json({ error: 'User not found' });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ error: 'Error logging in' });
+  }
+});
+
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
