@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs"); // Change from bcrypt to bcryptjs
 const express = require("express");
 const User = require("../models/User");
 
