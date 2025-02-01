@@ -1,19 +1,14 @@
 const express = require("express");
-const mongoose = require("mongoose");
-
 const app = express();
-app.use(express.json()); // Middleware to parse JSON
 
-// Sample Register Route
-app.post("/register", (req, res) => {
-    const { fullName, email, phone, password, age } = req.body;
-    
-    if (!fullName || !email || !phone || !password || !age) {
-        return res.status(400).json({ message: "All fields are required" });
-    }
+// Middleware
+app.use(express.json());
 
-    res.status(201).json({ message: "User registered successfully", user: req.body });
-});
+// Import Routes
+const authRoutes = require("./routes/authRoutes");
+
+// Use Routes
+app.use("/auth", authRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
