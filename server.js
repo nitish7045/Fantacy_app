@@ -1,37 +1,26 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
-app.use(express.json());
 
-// MongoDB Atlas Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch(err => console.error('Connection error:', err));
+// Middleware
+app.use(express.json());  // Allows us to parse JSON request bodies
+app.use(cors());
 
-// User Schema
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.error('MongoDB Connection Error:', err));
 
-const User = mongoose.model('User', userSchema);
+// Import routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes); // Route for authentication
 
-// Register Endpoint
-app.post('/register', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
-    await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Error registering user' });
-  }
-});
-
-// Start Server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
