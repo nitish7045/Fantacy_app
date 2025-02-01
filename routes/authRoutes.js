@@ -7,9 +7,9 @@ const moment = require("moment-timezone"); // Timezone conversion
 
 // Register Route
 router.post("/register", async (req, res) => {
-    const { fullName, email, phone, password, avatar } = req.body;
+    const { fullName, email, phone, password, avatar, age } = req.body;
 
-    if (!fullName || !email || !phone || !password) {
+    if (!fullName || !email || !phone || !password || !age) {
         return res.status(400).json({ message: "All fields except avatar are required" });
     }
 
@@ -28,6 +28,7 @@ router.post("/register", async (req, res) => {
             phone,
             password: hashedPassword, // Save hashed password
             avatar: avatar || "", // Optional field
+            age, // Save age
         });
 
         await newUser.save();
@@ -40,6 +41,7 @@ router.post("/register", async (req, res) => {
                 email: newUser.email,
                 phone: newUser.phone,
                 avatar: newUser.avatar,
+                age: newUser.age, // Return the age
                 createdAt: moment(newUser.createdAt).tz("Asia/Kolkata").format(),
             },
         });
