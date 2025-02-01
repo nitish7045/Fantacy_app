@@ -3,17 +3,17 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const UserSchema = new mongoose.Schema(
     {
-        userId: { type: Number, unique: true }, // Auto-increment user ID
+        userId: { type: Number, unique: true },
         fullName: { type: String, required: true },
-        email: { type: String, required: true, unique: true }, // Unique email
+        email: { type: String, required: true, unique: true },
         phone: { type: String, required: true },
         password: { type: String, required: true },
-        avatar: { type: String, default: "" }, // Profile image URL
-        isBlocked: { type: Boolean, default: false }, // 0: Active, 1: Blocked
-        resetToken: { type: String, default: null }, // Token for password reset
-        tokenExpiry: { type: Date, default: null }, // Token expiration time
+        avatar: { type: String, default: "" }, // Optional profile picture
+        isBlocked: { type: Boolean, default: false },
+        resetToken: { type: String, default: null }, // 6-digit OTP
+        tokenExpiry: { type: Number, default: null }, // OTP expiration in UNIX timestamp (seconds)
     },
-    { timestamps: { createdAt: "createdAt", updatedAt: "modifiedAt" } } // Auto-set timestamps
+    { timestamps: { createdAt: "createdAt", updatedAt: "modifiedAt" } }
 );
 
 // Auto-increment userId starting from 2025101

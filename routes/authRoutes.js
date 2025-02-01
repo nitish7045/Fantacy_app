@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
 const User = require("../models/User");
+const bcrypt = require("bcryptjs"); // Hashing passwords
+const moment = require("moment-timezone"); // Timezone conversion
 
 // Register Route
 router.post("/register", async (req, res) => {
     const { fullName, email, phone, password, avatar } = req.body;
 
     if (!fullName || !email || !phone || !password) {
-        return res.status(400).json({ message: "All fields are required" });
+        return res.status(400).json({ message: "All fields except avatar are required" });
     }
 
     try {
@@ -17,19 +19,29 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({ message: "User already registered" });
         }
 
-        const newUser = new User({ fullName, email, phone, password, avatar });
+        // Hash password before saving
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            fullName,
+            email,
+            phone,
+            password: hashedPassword, // Save hashed password
+            avatar: avatar || "", // Optional field
+        });
+
         await newUser.save();
 
-        res.status(201).json({ 
-            message: "User registered successfully", 
-            user: { 
-                userId: newUser.userId, 
-                fullName: newUser.fullName, 
-                email: newUser.email, 
+        res.status(201).json({
+            message: "User registered successfully",
+            user: {
+                userId: newUser.userId,
+                fullName: newUser.fullName,
+                email: newUser.email,
                 phone: newUser.phone,
                 avatar: newUser.avatar,
-                createdAt: newUser.createdAt 
-            } 
+                createdAt: moment(newUser.createdAt).tz("Asia/Kolkata").format(),
+            },
         });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
@@ -55,7 +67,9 @@ router.post("/login", async (req, res) => {
             return res.status(403).json({ message: "Your account is blocked" });
         }
 
-        if (user.password !== password) {
+        // Compare hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
@@ -64,6 +78,7 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 });
+
 
 // Forgot Password Route
 router.post("/forgot-password", async (req, res) => {
@@ -79,12 +94,16 @@ router.post("/forgot-password", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const resetToken = crypto.randomBytes(32).toString("hex");
+        // Generate 6-digit OTP
+        const resetToken = Math.floor(100000 + Math.random() * 900000).toString(); // Example: "654321"
+        const tokenExpiry = Math.floor(Date.now() / 1000) + 300; // Expiry in 5 min (UNIX time in seconds)
+
         user.resetToken = resetToken;
-        user.tokenExpiry = Date.now() + 5 * 60 * 1000; // 5 min expiry
+        user.tokenExpiry = tokenExpiry;
         await user.save();
 
-        res.status(200).json({ message: "Reset link sent", resetToken });
+        // In real-world, send OTP via email/SMS
+        res.status(200).json({ message: "OTP sent", resetToken });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
@@ -95,17 +114,21 @@ router.post("/reset-password", async (req, res) => {
     const { resetToken, newPassword } = req.body;
 
     if (!resetToken || !newPassword) {
-        return res.status(400).json({ message: "Token and new password are required" });
+        return res.status(400).json({ message: "OTP and new password are required" });
     }
 
     try {
-        const user = await User.findOne({ resetToken, tokenExpiry: { $gt: Date.now() } });
+        const user = await User.findOne({
+            resetToken,
+            tokenExpiry: { $gt: Math.floor(Date.now() / 1000) }, // Token must not be expired
+        });
 
         if (!user) {
-            return res.status(400).json({ message: "Invalid or expired token" });
+            return res.status(400).json({ message: "Invalid or expired OTP" });
         }
 
-        user.password = newPassword;
+        // Hash new password
+        user.password = await bcrypt.hash(newPassword, 10);
         user.resetToken = null;
         user.tokenExpiry = null;
         await user.save();
@@ -115,6 +138,7 @@ router.post("/reset-password", async (req, res) => {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 });
+
 
 // Block/Unblock Users
 router.put("/block/:userId", async (req, res) => {
