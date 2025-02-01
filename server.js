@@ -1,26 +1,20 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
 
 const app = express();
+app.use(express.json()); // Middleware to parse JSON
 
-// Middleware
-app.use(express.json());  // Allows us to parse JSON request bodies
-app.use(cors());
+// Sample Register Route
+app.post("/register", (req, res) => {
+    const { fullName, email, phone, password, age } = req.body;
+    
+    if (!fullName || !email || !phone || !password || !age) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.error('MongoDB Connection Error:', err));
+    res.status(201).json({ message: "User registered successfully", user: req.body });
+});
 
-// Import routes
-const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes); // Route for authentication
-
-// Start server
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
