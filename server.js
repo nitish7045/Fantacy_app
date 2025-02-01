@@ -1,13 +1,18 @@
 const express = require("express");
-const app = express();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-// Middleware
+const app = express();
 app.use(express.json());
+
+// Connect to MongoDB Atlas
+mongoose
+    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log("DB Connection Error:", err));
 
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
-
-// Use Routes
 app.use("/auth", authRoutes);
 
 // Start Server
