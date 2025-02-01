@@ -4,6 +4,11 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 const UserSchema = new mongoose.Schema(
     {
         userId: { type: Number, unique: true },
+        age: { 
+            type: Number, 
+            required: true,
+            min: 18, // Optional validation: age must be at least 18
+        },
         fullName: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         phone: { type: String, required: true },
