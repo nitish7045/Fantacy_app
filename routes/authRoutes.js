@@ -4,7 +4,6 @@ const crypto = require("crypto");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs"); // Hashing passwords
 const moment = require("moment-timezone"); // Timezone conversion
-
 // Register Route
 router.post("/register", async (req, res) => {
     const { fullName, email, phone, password, avatar, age } = req.body;
@@ -14,7 +13,11 @@ router.post("/register", async (req, res) => {
     }
 
     try {
-        const existingUser = await User.findOne({ email });
+        // Convert the email to lowercase before checking for an existing user
+        const emailLowercase = email.toLowerCase();
+
+        // Check if the user already exists with the lowercase email
+        const existingUser = await User.findOne({ email: emailLowercase });
         if (existingUser) {
             return res.status(400).json({ message: "User already registered" });
         }
@@ -24,7 +27,7 @@ router.post("/register", async (req, res) => {
 
         const newUser = new User({
             fullName,
-            email,
+            email: emailLowercase, // Save email in lowercase
             phone,
             password: hashedPassword, // Save hashed password
             avatar: avatar || "", // Optional field
@@ -51,6 +54,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login Route
+// Login Route
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
@@ -59,7 +63,8 @@ router.post("/login", async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email });
+        // Convert email to lowercase to make it case-insensitive
+        const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
@@ -80,6 +85,7 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 });
+
 
 
 // Forgot Password Route
