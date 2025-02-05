@@ -194,10 +194,10 @@ router.post('/save-team', async (req, res) => {
   
     try {
       // Check if the team already exists for the given matchId and userId
-      const existingTeam = await Team.findOne({ userId, matchId });
-      if (existingTeam) {
-        return res.status(400).json({ message: 'Team already saved for this match' });
-      }
+    //   const existingTeam = await Team.findOne({ userId, matchId });
+    //   if (existingTeam) {
+    //     return res.status(400).json({ message: 'Team already saved for this match' });
+    //   }
   
       // Create a new team document
       const newTeam = new Team({
