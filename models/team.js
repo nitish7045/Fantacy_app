@@ -10,6 +10,11 @@ const getISTTime = () => {
 const teamSchema = new mongoose.Schema({
   teamId: { type: Number, unique: true },
   userId: { type: Number, required: true },
+  seriesName:{type:String,required:true},
+  matchTitle:{type:String,required:true},
+  matchFormat:{type:String,required:true},
+  matchDate:{type:String,required:true},
+  sportType:{type:String,required:true},
   team: [
     {
     //   id: { type: Number, required: true }, // Player ID

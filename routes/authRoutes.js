@@ -185,7 +185,7 @@ router.put("/unblock/:userId", async (req, res) => {
 
 // Save Team Route
 router.post('/save-team', async (req, res) => {
-    const { userId, matchId, team } = req.body;
+    const { userId, matchId, team,seriesName,matchTitle,matchFormat,matchDate,sportType} = req.body;
   
     // Validate required fields
     if (!userId || !matchId || !team || !Array.isArray(team)) {
@@ -203,7 +203,7 @@ router.post('/save-team', async (req, res) => {
       const newTeam = new Team({
         userId,
         matchId,
-        team,
+        team,seriesName,matchTitle,matchFormat,matchDate,sportType,
       });
   
       // Save the team to the database
@@ -217,6 +217,11 @@ router.post('/save-team', async (req, res) => {
           userId: newTeam.userId,
           matchId: newTeam.matchId,
           team: newTeam.team,
+          seriesName:newTeam.seriesName,
+          matchTitle:newTeam.matchTitle,
+          matchFormat:newTeam.matchFormat,
+          matchDate:newTeam.matchDate,
+          sportType:newTeam.sportType,
           createdAt: newTeam.createdAt,
           updatedAt: newTeam.updatedAt,
         },
