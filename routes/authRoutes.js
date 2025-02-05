@@ -194,10 +194,10 @@ router.post('/save-team', async (req, res) => {
   
     try {
       // Check if the team already exists for the given matchId and userId
-    //   const existingTeam = await Team.findOne({ userId, matchId });
-    //   if (existingTeam) {
-    //     return res.status(400).json({ message: 'Team already saved for this match' });
-    //   }
+      const existingTeam = await Team.findOne({ userId, matchId });
+      if (existingTeam) {
+        return res.status(400).json({ message: 'Team already saved for this match' });
+      }
   
       // Create a new team document
       const newTeam = new Team({
@@ -227,19 +227,22 @@ router.post('/save-team', async (req, res) => {
   });
 
 // Get Team by Match ID and User ID
-router.get("/team/:matchId/:userId", async (req, res) => {
-  const { matchId, userId } = req.params;
-
-  try {
-    const team = await Team.findOne({ matchId, userId });
-    if (!team) {
-      return res.status(404).json({ message: "Team not found" });
+// Get all Teams by User ID
+router.get("/teams/:userId", async (req, res) => {
+    const { userId } = req.params;
+  
+    try {
+      const teams = await Team.find({ userId });
+      
+      if (!teams || teams.length === 0) {
+        return res.status(404).json({ message: "No teams found" });
+      }
+  
+      res.status(200).json({ teams });
+    } catch (err) {
+      res.status(500).json({ message: "Server error", error: err.message });
     }
-
-    res.status(200).json({ team });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-});
+  });
+  
 
 module.exports = router;
