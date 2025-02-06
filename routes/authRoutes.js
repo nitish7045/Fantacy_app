@@ -185,7 +185,8 @@ router.put("/unblock/:userId", async (req, res) => {
 
 // Save Team Route
 router.post('/save-team', async (req, res) => {
-    const { userId, matchId, team,seriesName,matchTitle,matchFormat,matchDate,sportType} = req.body;
+    const { userId, matchId, team,seriesName,matchTitle,matchFormat,matchDate,sportType,
+        captain,viceCaptain,} = req.body;
   
     // Validate required fields
     if (!userId || !matchId || !team || !Array.isArray(team)) {
@@ -204,6 +205,8 @@ router.post('/save-team', async (req, res) => {
         userId,
         matchId,
         team,seriesName,matchTitle,matchFormat,matchDate,sportType,
+        captain,
+        viceCaptain,
       });
   
       // Save the team to the database
@@ -222,8 +225,8 @@ router.post('/save-team', async (req, res) => {
           matchFormat:newTeam.matchFormat,
           matchDate:newTeam.matchDate,
           sportType:newTeam.sportType,
-          createdAt: newTeam.createdAt,
-          updatedAt: newTeam.updatedAt,
+          viceCaptain:newTeam.viceCaptain,
+          captain:newTeam.captain,
         },
       });
     } catch (err) {
@@ -246,6 +249,50 @@ router.get("/teams/:userId", async (req, res) => {
       res.status(200).json({ teams });
     } catch (err) {
       res.status(500).json({ message: "Server error", error: err.message });
+    }
+  });
+
+  // ✅ Fetch ALL Transactions (No Limit)
+router.get("/all-transactions", async (req, res) => {
+    try {
+      const transactions = await Transaction.find().sort({ createdAt: -1 });
+  
+      res.json(transactions);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
+  
+  // ✅ Fetch Transactions of a Specific User
+  router.get("/user-transactions/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const transactions = await Transaction.find({ userId }).sort({ createdAt: -1 });
+  
+      res.json(transactions);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
+  
+  // ✅ Fetch User, Wallet & Transactions Together
+  router.get("/user-details/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const user = await User.findOne({ userId });
+      if (!user) return res.status(404).json({ message: "User not found" });
+  
+      const wallet = await Wallet.findOne({ userId });
+
+      const transactions = await Transaction.find({ userId }).sort({ createdAt: -1 });
+  
+      res.json({ user, wallet, transactions });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
     }
   });
   
