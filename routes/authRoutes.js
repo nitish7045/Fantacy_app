@@ -5,6 +5,47 @@ const User = require("../models/User");
 const Team = require("../models/team"); // Import the Team model
 const bcrypt = require("bcryptjs"); // Hashing passwords
 const moment = require("moment-timezone"); // Timezone conversion
+// const moment = require("moment-timezone");
+const Wallet = require("../models/wallet");
+const Transaction = require('../models/transaction');
+
+
+// Function to get IST time
+const getISTTime = () => {
+    return moment.tz("Asia/Kolkata").format();
+  };
+  
+  // Route to create wallet for user
+  router.post("/create-wallet", async (req, res) => {
+    try {
+      const { userId } = req.body; // Get userId from AsyncStorage (sent from frontend)
+  
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+  
+      // Check if wallet already exists
+      const existingWallet = await Wallet.findOne({ userId });
+  
+      if (existingWallet) {
+        return res.status(400).json({ message: "Wallet already exists" });
+      }
+  
+      // Create new wallet with bonus balance
+      const newWallet = new Wallet({
+        userId,
+        balance: 200, // Bonus balance
+      });
+  
+      await newWallet.save();
+  
+      res.status(201).json({ message: "Wallet created successfully", wallet: newWallet });
+    } catch (error) {
+      console.error("Error creating wallet:", error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
+
 
 // Register Route
 router.post("/register", async (req, res) => {
@@ -47,7 +88,7 @@ router.post("/register", async (req, res) => {
         phone: newUser.phone,
         avatar: newUser.avatar,
         age: newUser.age, // Return the age
-        createdAt: moment(newUser.createdAt).tz("Asia/Kolkata").format(),
+        // createdAt: moment(newUser.createdAt).tz("Asia/Kolkata").format(),
       },
     });
   } catch (err) {
@@ -276,20 +317,29 @@ router.get("/all-transactions", async (req, res) => {
       res.status(500).json({ message: "Server Error" });
     }
   });
-  
-  // ✅ Fetch User, Wallet & Transactions Together
-  router.get("/user-details/:userId", async (req, res) => {
-    try {
-      const { userId } = req.params;
-  
-      const user = await User.findOne({ userId });
-      if (!user) return res.status(404).json({ message: "User not found" });
-  
-      const wallet = await Wallet.findOne({ userId });
 
-      const transactions = await Transaction.find({ userId }).sort({ createdAt: -1 });
+  // GET route to fetch user details by userId
+router.get('/user/:userId', async (req, res) => {
+    try {
+      const { userId } = req.params;  // Get the userId from the route parameters
+      
+      // Find the user by userId
+      const user = await User.findOne({ userId });
   
-      res.json({ user, wallet, transactions });
+      // If the user is not found, return a 404 error
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Return the user data in the response
+      res.json({
+        userId: user.userId,
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+        avatar: user.avatar,
+        isBlocked: user.isBlocked,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Server Error" });
@@ -353,6 +403,66 @@ router.post('/update-team', async (req, res) => {
       res.status(500).json({ message: 'Server error', error: err.message });
     }
   });
+
+  // Route to handle a transaction (recharge, createTeam, withdraw, couponCode, referralMoney)
+router.post('/transaction', async (req, res) => {
+    const { userId, walletId, amount, transactionType, status } = req.body;
+  
+    if (!userId || !walletId || !amount || !transactionType || !status) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+  
+    // Validate the transaction type
+    const validTransactionTypes = ['recharge', 'createTeam', 'withdraw', 'couponCode', 'referralMoney'];
+    if (!validTransactionTypes.includes(transactionType)) {
+      return res.status(400).json({ message: 'Invalid transaction type' });
+    }
+  
+    try {
+      const transaction = new Transaction({
+        userId:userId , // Ensure the userId is an ObjectId
+        walletId: walletId, // Ensure the walletId is an ObjectId
+        amount,
+        transactionType,
+        status
+      });
+  
+      // Save the transaction to the database
+      const savedTransaction = await transaction.save();
+      return res.status(201).json({ message: 'Transaction successful', transaction: savedTransaction });
+    } catch (err) {
+      console.error('Error saving transaction:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  // Route to get all transactions for a user
+  router.get('/transactions/:userId', async (req, res) => {
+    try {
+      const userTransactions = await Transaction.find({ userId: req.params.userId }).populate('walletId');
+      return res.status(200).json(userTransactions);
+    } catch (err) {
+      console.error('Error fetching transactions:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  // Route to get a specific transaction by ID
+  router.get('/transaction/:transactionId', async (req, res) => {
+    const transactionId = parseInt(req.params.transactionId); // Convert the transactionId to an integer
+  
+    try {
+      const transaction = await Transaction.findOne({ transactionId: transactionId }); // Query by integer transactionId
+      if (!transaction) {
+        return res.status(404).json({ message: 'Transaction not found' });
+      }
+      return res.status(200).json(transaction);
+    } catch (err) {
+      console.error('Error fetching transaction:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
   
 
 module.exports = router;
