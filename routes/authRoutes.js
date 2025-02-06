@@ -295,6 +295,64 @@ router.get("/all-transactions", async (req, res) => {
       res.status(500).json({ message: "Server Error" });
     }
   });
+
+  // Update Team, Captain, and Vice-Captain Route
+router.post('/update-team', async (req, res) => {
+    const { teamId, team, captain, viceCaptain } = req.body;
+  
+    // Validate required fields
+    if (!teamId || !team || !Array.isArray(team) || !captain || !viceCaptain) {
+      return res.status(400).json({ message: 'teamId, team (array), captain, and viceCaptain are required' });
+    }
+  
+    try {
+      // Find the existing team document by teamId
+      const existingTeam = await Team.findOne({ teamId });
+  
+      if (!existingTeam) {
+        return res.status(404).json({ message: 'Team not found' });
+      }
+  
+      // Ensure captain and vice-captain are part of the team
+      const playerNames = team.map(player => player.name);
+  
+      if (!playerNames.includes(captain)) {
+        return res.status(400).json({ message: 'Captain must be a selected player in the team.' });
+      }
+  
+      if (!playerNames.includes(viceCaptain)) {
+        return res.status(400).json({ message: 'Vice-Captain must be a selected player in the team.' });
+      }
+  
+      // Update the team array, captain, and vice-captain
+      existingTeam.team = team; // Update the team array
+      existingTeam.captain = captain; // Update the captain
+      existingTeam.viceCaptain = viceCaptain; // Update the vice-captain
+  
+      // Save the updated team document
+      await existingTeam.save();
+  
+      // Respond with success message and updated team data
+      res.status(200).json({
+        message: 'Team updated successfully',
+        team: {
+          teamId: existingTeam.teamId,
+          userId: existingTeam.userId,
+          matchId: existingTeam.matchId,
+          team: existingTeam.team,
+          seriesName: existingTeam.seriesName,
+          matchTitle: existingTeam.matchTitle,
+          matchFormat: existingTeam.matchFormat,
+          matchDate: existingTeam.matchDate,
+          sportType: existingTeam.sportType,
+          captain: existingTeam.captain,
+          viceCaptain: existingTeam.viceCaptain,
+        },
+      });
+    } catch (err) {
+      res.status(500).json({ message: 'Server error', error: err.message });
+    }
+  });
   
 
 module.exports = router;
