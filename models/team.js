@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
+const moment = require('moment-timezone');
 
-// Function to get current IST time
 const getISTTime = () => {
-  const now = new Date();
-  return new Date(now.getTime() + 5.5 * 60 * 60 * 1000); // Convert UTC to IST
+  return moment.tz('Asia/Kolkata').format(); // Get the current time in IST
 };
+
+// // Function to get current IST time
+// const getISTTime = () => {
+//   const now = new Date();
+//   return new Date(now.getTime() + 5.5 * 60 * 60 * 1000); // Convert UTC to IST
+// };
 
 const teamSchema = new mongoose.Schema(
   {
