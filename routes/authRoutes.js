@@ -14,6 +14,39 @@ const Transaction = require('../models/transaction');
 const getISTTime = () => {
     return moment.tz("Asia/Kolkata").format();
   };
+
+  // Route to get wallet information by userId
+router.get('/wallet/:userId', async (req, res) => {
+    try {
+      const { userId } = req.params;  // Get the userId from the route parameters
+  
+      // Check if the user exists first
+      const user = await User.findOne({ userId });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Fetch the wallet information for the given userId
+      const wallet = await Wallet.findOne({ userId });
+      if (!wallet) {
+        return res.status(404).json({ message: "Wallet not found" });
+      }
+  
+      // Return wallet information
+      res.json({
+        userId: wallet.userId,
+        balance: wallet.balance,
+        currency: wallet.currency,
+        walletId: wallet.walletId,  // You can return the walletId as well
+        createdAt:wallet.createdAt,
+        updatedAt:wallet.updatedAt,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
+  
   
   // Route to create wallet for user
   router.post("/create-wallet", async (req, res) => {
