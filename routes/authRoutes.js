@@ -9,13 +9,6 @@ const moment = require("moment-timezone"); // Timezone conversion
 const Wallet = require("../models/wallet");
 const Transaction = require('../models/transaction');
 const Admin = require('../models/admin');
-const cors = require('cors');
-
-app.use(cors({
-    origin: '*', // Allow all domains (for testing)
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
 
 
