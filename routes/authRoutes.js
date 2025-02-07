@@ -11,6 +11,43 @@ const Transaction = require('../models/transaction');
 const Admin = require('../models/admin');
 
 
+// Fetch all users (Admin only)
+router.get('/admin/fetch-users', async (req, res) => {
+    try {
+      const users = await User.find();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+// Fetch all transaction (Admin only)
+router.get('/admin/transaction', async (req, res) => {
+    try {
+      const transactions = await Transaction.find();
+      res.json(transactions);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+// Fetch all Wallet (Admin only)
+router.get('/admin/wallet', async (req, res) => {
+    try {
+      const wallets = await Wallet.find();
+      res.json(wallets);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+// Fetch all team (Admin only)
+router.get('/admin/team', async (req, res) => {
+    try {
+      const teams = await Team.find();
+      res.json(teams);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+
 
 // Register Admin
 router.post('/admin/register', async (req, res) => {
