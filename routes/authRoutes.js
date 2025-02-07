@@ -8,8 +8,62 @@ const moment = require("moment-timezone"); // Timezone conversion
 // const moment = require("moment-timezone");
 const Wallet = require("../models/wallet");
 const Transaction = require('../models/transaction');
+const Admin = require('../models/admin');
 
 
+
+// Register Admin
+router.post('/admin/register', async (req, res) => {
+    try {
+      const { username, email, password } = req.body;
+      
+      // Check if admin already exists
+      let admin = await Admin.findOne({ email });
+      if (admin) {
+        return res.status(400).json({ message: 'Admin already exists' });
+      }
+      
+      // Hash password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      
+      // Create new admin
+      admin = new Admin({
+        username,
+        email,
+        password: hashedPassword
+      });
+      
+      await admin.save();
+      res.status(201).json({ message: 'Admin registered successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+  
+ // Login Admin
+router.post('/admin/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      // Check if admin exists
+      const admin = await Admin.findOne({ email });
+      if (!admin) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+      
+      // Compare password
+      const isMatch = await bcrypt.compare(password, admin.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+      
+      res.json({ message: 'Login successful', adminId: admin.adminId });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  });
+  
 // Function to get IST time
 const getISTTime = () => {
     return moment.tz("Asia/Kolkata").format();
