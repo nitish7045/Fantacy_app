@@ -10,7 +10,75 @@ const Wallet = require("../models/wallet");
 const Transaction = require('../models/transaction');
 const Admin = require('../models/admin');
 const FootballMatch = require("../models/FootballMatch");
-const CricketMatch =require("../models/CricketMatch")
+const CricketMatch =require("../models/CricketMatch");
+const MatchResults = require('../models/MatchResults');
+// const MatchResults =require("../models/MatchResult");
+
+// GET all match results with players' points
+router.get('/all-match-results', async (req, res) => {
+    try {
+      const matchResults = await MatchResults.find().populate('playersPoints'); // Populate players' points if needed
+      
+      // If no results found
+      if (!matchResults.length) {
+        return res.status(404).json({
+          message: 'No match results found.',
+        });
+      }
+  
+      res.status(200).json({
+        message: 'Match results retrieved successfully!',
+        matchResults,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: 'Error retrieving match results',
+        error: error.message,
+      });
+    }
+  });
+  
+// Save match results route
+router.post('/save-match-results', async (req, res) => {
+    try {
+      const {
+        matchId,
+        seriesName,
+        matchTitle,
+        matchFormat,
+        matchVenue,
+        matchDateTime,
+        playersPoints
+      } = req.body;
+  
+      // Create a new match result entry
+      const matchResult = new MatchResults({
+        matchId,
+        seriesName,
+        matchTitle,
+        matchFormat,
+        matchVenue,
+        matchDateTime,
+        playersPoints,
+      });
+  
+      // Save to the database
+      await matchResult.save();
+  
+      // Send a success response
+      res.status(201).json({
+        message: 'Match results saved successfully!',
+        matchResult,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: 'Error saving match results',
+        error: error.message,
+      });
+    }
+  });
 
 // ✅ Save a new Football Match
 router.post("/admin/football/match", async (req, res) => {
@@ -25,6 +93,15 @@ router.post("/admin/football/match", async (req, res) => {
 
 // ✅ Get all Football Matches (Sorted by newest first)
 router.get("/admin/football/matches", async (req, res) => {
+    try {
+        const matches = await FootballMatch.find().sort({ createdAt: -1 }); // Newest first
+        res.json(matches);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+// ✅ Get all players Matches (Sorted by newest first)
+router.get("/admin/players", async (req, res) => {
     try {
         const matches = await FootballMatch.find().sort({ createdAt: -1 }); // Newest first
         res.json(matches);
