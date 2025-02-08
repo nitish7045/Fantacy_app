@@ -9,8 +9,118 @@ const moment = require("moment-timezone"); // Timezone conversion
 const Wallet = require("../models/wallet");
 const Transaction = require('../models/transaction');
 const Admin = require('../models/admin');
+const FootballMatch = require("../models/FootballMatch");
+const CricketMatch =require("../models/CricketMatch")
+
+// ✅ Save a new Football Match
+router.post("/admin/football/match", async (req, res) => {
+    try {
+        const newMatch = new FootballMatch(req.body);
+        const savedMatch = await newMatch.save();
+        res.status(201).json({ message: "Football match added successfully!", match: savedMatch });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// ✅ Get all Football Matches (Sorted by newest first)
+router.get("/admin/football/matches", async (req, res) => {
+    try {
+        const matches = await FootballMatch.find().sort({ createdAt: -1 }); // Newest first
+        res.json(matches);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// ✅ Update a Football Match
+router.put("/admin/football/match/:matchId", async (req, res) => {
+    try {
+        const updatedMatch = await FootballMatch.findOneAndUpdate(
+            { matchId: req.params.matchId },  // Find by matchId
+            req.body,
+            { new: true }
+        );
+
+        if (!updatedMatch) {
+            return res.status(404).json({ message: "Match not found" });
+        }
+
+        res.json({ message: "Match updated successfully", match: updatedMatch });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
 
 
+// ✅ Delete a Football Match
+router.delete("/admin/football/match/:matchId", async (req, res) => {
+    try {
+        const deletedMatch = await FootballMatch.findOneAndDelete({ matchId: req.params.matchId });
+
+        if (!deletedMatch) {
+            return res.status(404).json({ message: "Match not found" });
+        }
+
+        res.json({ message: "Match deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+// ✅ Save a new Cricket Match
+router.post("/admin/cricket/match", async (req, res) => {
+    try {
+        const newMatch = new CricketMatch(req.body);
+        const savedMatch = await newMatch.save();
+        res.status(201).json({ message: "Cricket match added successfully!", match: savedMatch });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// ✅ Get all Cricket Matches (Sorted by newest first)
+router.get("/admin/cricket/matches", async (req, res) => {
+    try {
+        const matches = await CricketMatch.find().sort({ createdAt: -1 }); // Newest first
+        res.json(matches);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// ✅ Update a Cricket Match
+router.put("/admin/cricket/match/:matchId", async (req, res) => {
+    try {
+        const updatedMatch = await CricketMatch.findOneAndUpdate(
+            { matchId: req.params.matchId },  // Find by matchId
+            req.body,
+            { new: true }
+        );
+
+        if (!updatedMatch) {
+            return res.status(404).json({ message: "Match not found" });
+        }
+
+        res.json({ message: "Match updated successfully", match: updatedMatch });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// ✅ Delete a Cricket Match
+router.delete("/admin/cricket/match/:matchId", async (req, res) => {
+    try {
+        const deletedMatch = await CricketMatch.findOneAndDelete({ matchId: req.params.matchId });
+
+        if (!deletedMatch) {
+            return res.status(404).json({ message: "Match not found" });
+        }
+
+        res.json({ message: "Match deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
 
 // Fetch all users (Admin only)
 router.get('/admin/fetch-users', async (req, res) => {
