@@ -1,0 +1,540 @@
+{
+    "Cricket": {
+      "teams": [
+        {
+          "teamName": "PAK",
+          "players": [
+            { "id": 1, "name": "Babar Azam", "position": "Batsman" },
+            { "id": 2, "name": "Mohammad Rizwan", "position": "Wicketkeeper" },
+            { "id": 3, "name": "Shaheen Afridi", "position": "Bowler" },
+            { "id": 4, "name": "Fakhar Zaman", "position": "Batsman" },
+            { "id": 5, "name": "Shadab Khan", "position": "All-rounder" },
+            { "id": 6, "name": "Haris Rauf", "position": "Bowler" },
+            { "id": 7, "name": "Mohammad Nawaz", "position": "All-rounder" },
+            { "id": 8, "name": "Naseem Shah", "position": "Bowler" },
+            { "id": 9, "name": "Imam-ul-Haq", "position": "Batsman" },
+            { "id": 10, "name": "Iftikhar Ahmed", "position": "All-rounder" },
+            { "id": 11, "name": "Hasan Ali", "position": "Bowler" }
+          ]
+        },
+        {
+            "teamName": "IND",
+            "players": [
+              { "id": 1, "name": "Virat Kohli", "position": "Batsman" },
+              { "id": 2, "name": "Rohit Sharma", "position": "Batsman" },
+              { "id": 3, "name": "Jasprit Bumrah", "position": "Bowler" },
+              { "id": 4, "name": "Hardik Pandya", "position": "All-rounder" },
+              { "id": 5, "name": "KL Rahul", "position": "Wicketkeeper" },
+              { "id": 6, "name": "Shubman Gill", "position": "Batsman" },
+              { "id": 7, "name": "Ravindra Jadeja", "position": "All-rounder" },
+              { "id": 8, "name": "Mohammed Shami", "position": "Bowler" },
+              { "id": 9, "name": "Cheteshwar Pujara", "position": "Batsman" },
+              { "id": 10, "name": "Rishabh Pant", "position": "Wicketkeeper" },
+              { "id": 11, "name": "Ishant Sharma", "position": "Bowler" }
+            ]
+          }, {
+            "teamName": "AUS",
+            "players": [
+              { "id": 1, "name": "David Warner", "position": "Batsman" },
+              { "id": 2, "name": "Steve Smith", "position": "Batsman" },
+              { "id": 3, "name": "Mitchell Starc", "position": "Bowler" },
+              { "id": 4, "name": "Pat Cummins", "position": "Bowler" },
+              { "id": 5, "name": "Alex Carey", "position": "Wicketkeeper" },
+              { "id": 6, "name": "Glenn Maxwell", "position": "All-rounder" },
+              { "id": 7, "name": "Marcus Stoinis", "position": "All-rounder" },
+              { "id": 8, "name": "Marnus Labuschagne", "position": "Batsman" },
+              { "id": 9, "name": "Josh Hazlewood", "position": "Bowler" },
+              { "id": 10, "name": "Matthew Wade", "position": "Wicketkeeper" },
+              { "id": 11, "name": "Mitchell Marsh", "position": "All-rounder" }
+            ]
+          },
+        {
+          "teamName": "ENG",
+          "players": [
+            { "id": 1, "name": "Jos Buttler", "position": "Wicketkeeper" },
+            { "id": 2, "name": "Joe Root", "position": "Batsman" },
+            { "id": 3, "name": "Ben Stokes", "position": "All-rounder" },
+            { "id": 4, "name": "James Anderson", "position": "Bowler" },
+            { "id": 5, "name": "Stuart Broad", "position": "Bowler" },
+            { "id": 6, "name": "Jonny Bairstow", "position": "Batsman" },
+            { "id": 7, "name": "Moeen Ali", "position": "All-rounder" },
+            { "id": 8, "name": "Chris Woakes", "position": "All-rounder" },
+            { "id": 9, "name": "Ollie Pope", "position": "Batsman" },
+            { "id": 10, "name": "Mark Wood", "position": "Bowler" },
+            { "id": 11, "name": "Zak Crawley", "position": "Batsman" }
+          ]
+        },
+        {
+          "teamName": "BAN",
+          "players": [
+            { "id": 1, "name": "Shakib Al Hasan", "position": "All-rounder" },
+            { "id": 2, "name": "Mushfiqur Rahim", "position": "Wicketkeeper" },
+            { "id": 3, "name": "Tamim Iqbal", "position": "Batsman" },
+            { "id": 4, "name": "Mahmudullah", "position": "All-rounder" },
+            { "id": 5, "name": "Mustafizur Rahman", "position": "Bowler" },
+            { "id": 6, "name": "Litton Das", "position": "Batsman" },
+            { "id": 7, "name": "Mehidy Hasan", "position": "All-rounder" },
+            { "id": 8, "name": "Taskin Ahmed", "position": "Bowler" },
+            { "id": 9, "name": "Najmul Hossain", "position": "Batsman" },
+            { "id": 10, "name": "Shoriful Islam", "position": "Bowler" },
+            { "id": 11, "name": "Afif Hossain", "position": "All-rounder" }
+          ]
+        },
+        {
+          "teamName": "SL",
+          "players": [
+            { "id": 1, "name": "Dimuth Karunaratne", "position": "Batsman" },
+            { "id": 2, "name": "Kusal Mendis", "position": "Wicketkeeper" },
+            { "id": 3, "name": "Angelo Mathews", "position": "All-rounder" },
+            { "id": 4, "name": "Dhananjaya de Silva", "position": "All-rounder" },
+            { "id": 5, "name": "Wanindu Hasaranga", "position": "All-rounder" },
+            { "id": 6, "name": "Dasun Shanaka", "position": "All-rounder" },
+            { "id": 7, "name": "Pathum Nissanka", "position": "Batsman" },
+            { "id": 8, "name": "Lahiru Kumara", "position": "Bowler" },
+            { "id": 9, "name": "Dushmantha Chameera", "position": "Bowler" },
+            { "id": 10, "name": "Maheesh Theekshana", "position": "Bowler" },
+            { "id": 11, "name": "Asitha Fernando", "position": "Bowler" }
+          ]
+        },
+        {
+          "teamName": "SA",
+          "players": [
+            { "id": 1, "name": "Temba Bavuma", "position": "Batsman" },
+            { "id": 2, "name": "Quinton de Kock", "position": "Wicketkeeper" },
+            { "id": 3, "name": "Kagiso Rabada", "position": "Bowler" },
+            { "id": 4, "name": "Aiden Markram", "position": "Batsman" },
+            { "id": 5, "name": "David Miller", "position": "Batsman" },
+            { "id": 6, "name": "Anrich Nortje", "position": "Bowler" },
+            { "id": 7, "name": "Heinrich Klaasen", "position": "Wicketkeeper" },
+            { "id": 8, "name": "Marco Jansen", "position": "All-rounder" },
+            { "id": 9, "name": "Keshav Maharaj", "position": "Bowler" },
+            { "id": 10, "name": "Lungi Ngidi", "position": "Bowler" },
+            { "id": 11, "name": "Rassie van der Dussen", "position": "Batsman" }
+          ]
+        },
+        {
+          "teamName": "NZ",
+          "players": [
+            { "id": 1, "name": "Kane Williamson", "position": "Batsman" },
+            { "id": 2, "name": "Tom Latham", "position": "Wicketkeeper" },
+            { "id": 3, "name": "Trent Boult", "position": "Bowler" },
+            { "id": 4, "name": "Devon Conway", "position": "Batsman" },
+            { "id": 5, "name": "Tim Southee", "position": "Bowler" },
+            { "id": 6, "name": "Mitchell Santner", "position": "All-rounder" },
+            { "id": 7, "name": "Glenn Phillips", "position": "Batsman" },
+            { "id": 8, "name": "Lockie Ferguson", "position": "Bowler" },
+            { "id": 9, "name": "Daryl Mitchell", "position": "All-rounder" },
+            { "id": 10, "name": "Matt Henry", "position": "Bowler" },
+            { "id": 11, "name": "Will Young", "position": "Batsman" }
+          ]
+        },
+        {
+          "teamName": "WI",
+          "players": [
+            { "id": 1, "name": "Nicholas Pooran", "position": "Wicketkeeper" },
+            { "id": 2, "name": "Shai Hope", "position": "Batsman" },
+            { "id": 3, "name": "Jason Holder", "position": "All-rounder" },
+            { "id": 4, "name": "Shimron Hetmyer", "position": "Batsman" },
+            { "id": 5, "name": "Alzarri Joseph", "position": "Bowler" },
+            { "id": 6, "name": "Kyle Mayers", "position": "All-rounder" },
+            { "id": 7, "name": "Rovman Powell", "position": "Batsman" },
+            { "id": 8, "name": "Akeal Hosein", "position": "Bowler" },
+            { "id": 9, "name": "Brandon King", "position": "Batsman" },
+            { "id": 10, "name": "Keemo Paul", "position": "All-rounder" },
+            { "id": 11, "name": "Jayden Seales", "position": "Bowler" }
+          ]
+        },
+        {
+          "teamName": "AFG",
+          "players": [
+            { "id": 1, "name": "Rashid Khan", "position": "All-rounder" },
+            { "id": 2, "name": "Mohammad Nabi", "position": "All-rounder" },
+            { "id": 3, "name": "Rahmanullah Gurbaz", "position": "Wicketkeeper" },
+            { "id": 4, "name": "Hazratullah Zazai", "position": "Batsman" },
+            { "id": 5, "name": "Mujeeb Ur Rahman", "position": "Bowler" },
+            { "id": 6, "name": "Ibrahim Zadran", "position": "Batsman" },
+            { "id": 7, "name": "Najibullah Zadran", "position": "Batsman" },
+            { "id": 8, "name": "Naveen-ul-Haq", "position": "Bowler" },
+            { "id": 9, "name": "Fazalhaq Farooqi", "position": "Bowler" },
+            { "id": 10, "name": "Azmatullah Omarzai", "position": "All-rounder" },
+            { "id": 11, "name": "Hashmatullah Shahidi", "position": "Batsman" }
+          ]
+        }
+      ]
+    },
+    "Football": {
+      "teams": [
+        {
+          "teamName": "MUFC",
+          "players": [
+            { "id": 1, "name": "Marcus Rashford", "position": "Forward" },
+            { "id": 2, "name": "Bruno Fernandes", "position": "Midfielder" },
+            { "id": 3, "name": "Rasmus Højlund", "position": "Forward" },
+            { "id": 4, "name": "Mason Mount", "position": "Midfielder" },
+            { "id": 5, "name": "Casemiro", "position": "Midfielder" },
+            { "id": 6, "name": "André Onana", "position": "Goalkeeper" },
+            { "id": 7, "name": "Luke Shaw", "position": "Defender" },
+            { "id": 8, "name": "Lisandro Martínez", "position": "Defender" },
+            { "id": 9, "name": "Raphael Varane", "position": "Defender" },
+            { "id": 10, "name": "Antony", "position": "Forward" },
+            { "id": 11, "name": "Aaron Wan-Bissaka", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "LFC",
+          "players": [
+            { "id": 1, "name": "Mohamed Salah", "position": "Forward" },
+            { "id": 2, "name": "Darwin Núñez", "position": "Forward" },
+            { "id": 3, "name": "Virgil van Dijk", "position": "Defender" },
+            { "id": 4, "name": "Alisson", "position": "Goalkeeper" },
+            { "id": 5, "name": "Trent Alexander-Arnold", "position": "Defender" },
+            { "id": 6, "name": "Andrew Robertson", "position": "Defender" },
+            { "id": 7, "name": "Dominik Szoboszlai", "position": "Midfielder" },
+            { "id": 8, "name": "Luis Díaz", "position": "Forward" },
+            { "id": 9, "name": "Alexis Mac Allister", "position": "Midfielder" },
+            { "id": 10, "name": "Diogo Jota", "position": "Forward" },
+            { "id": 11, "name": "Ibrahima Konaté", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "RM",
+          "players": [
+            { "id": 1, "name": "Jude Bellingham", "position": "Midfielder" },
+            { "id": 2, "name": "Vinícius Júnior", "position": "Forward" },
+            { "id": 3, "name": "Thibaut Courtois", "position": "Goalkeeper" },
+            { "id": 4, "name": "Rodrygo", "position": "Forward" },
+            { "id": 5, "name": "Luka Modrić", "position": "Midfielder" },
+            { "id": 6, "name": "Toni Kroos", "position": "Midfielder" },
+            { "id": 7, "name": "Federico Valverde", "position": "Midfielder" },
+            { "id": 8, "name": "David Alaba", "position": "Defender" },
+            { "id": 9, "name": "Éder Militão", "position": "Defender" },
+            { "id": 10, "name": "Dani Carvajal", "position": "Defender" },
+            { "id": 11, "name": "Eduardo Camavinga", "position": "Midfielder" }
+          ]
+        },
+        {
+          "teamName": "BAR",
+          "players": [
+            { "id": 1, "name": "Robert Lewandowski", "position": "Forward" },
+            { "id": 2, "name": "Frenkie de Jong", "position": "Midfielder" },
+            { "id": 3, "name": "Pedri", "position": "Midfielder" },
+            { "id": 4, "name": "Marc-André ter Stegen", "position": "Goalkeeper" },
+            { "id": 5, "name": "João Félix", "position": "Forward" },
+            { "id": 6, "name": "Gavi", "position": "Midfielder" },
+            { "id": 7, "name": "Jules Koundé", "position": "Defender" },
+            { "id": 8, "name": "Ronald Araújo", "position": "Defender" },
+            { "id": 9, "name": "İlkay Gündoğan", "position": "Midfielder" },
+            { "id": 10, "name": "Raphinha", "position": "Forward" },
+            { "id": 11, "name": "João Cancelo", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "JUV",
+          "players": [
+            { "id": 1, "name": "Federico Chiesa", "position": "Forward" },
+            { "id": 2, "name": "Dušan Vlahović", "position": "Forward" },
+            { "id": 3, "name": "Adrien Rabiot", "position": "Midfielder" },
+            { "id": 4, "name": "Wojciech Szczęsny", "position": "Goalkeeper" },
+            { "id": 5, "name": "Manuel Locatelli", "position": "Midfielder" },
+            { "id": 6, "name": "Bremer", "position": "Defender" },
+            { "id": 7, "name": "Danilo", "position": "Defender" },
+            { "id": 8, "name": "Federico Gatti", "position": "Defender" },
+            { "id": 9, "name": "Weston McKennie", "position": "Midfielder" },
+            { "id": 10, "name": "Moise Kean", "position": "Forward" },
+            { "id": 11, "name": "Andrea Cambiaso", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "ACM",
+          "players": [
+            { "id": 1, "name": "Rafael Leão", "position": "Forward" },
+            { "id": 2, "name": "Olivier Giroud", "position": "Forward" },
+            { "id": 3, "name": "Mike Maignan", "position": "Goalkeeper" },
+            { "id": 4, "name": "Theo Hernández", "position": "Defender" },
+            { "id": 5, "name": "Fikayo Tomori", "position": "Defender" },
+            { "id": 6, "name": "Christian Pulisic", "position": "Forward" },
+            { "id": 7, "name": "Ruben Loftus-Cheek", "position": "Midfielder" },
+            { "id": 8, "name": "Tijjani Reijnders", "position": "Midfielder" },
+            { "id": 9, "name": "Yunus Musah", "position": "Midfielder" },
+            { "id": 10, "name": "Samuel Chukwueze", "position": "Forward" },
+            { "id": 11, "name": "Malick Thiaw", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "FCB",
+          "players": [
+            { "id": 1, "name": "Harry Kane", "position": "Forward" },
+            { "id": 2, "name": "Joshua Kimmich", "position": "Midfielder" },
+            { "id": 3, "name": "Leroy Sané", "position": "Forward" },
+            { "id": 4, "name": "Manuel Neuer", "position": "Goalkeeper" },
+            { "id": 5, "name": "Jamal Musiala", "position": "Midfielder" },
+            { "id": 6, "name": "Alphonso Davies", "position": "Defender" },
+            { "id": 7, "name": "Kingsley Coman", "position": "Forward" },
+            { "id": 8, "name": "Leon Goretzka", "position": "Midfielder" },
+            { "id": 9, "name": "Matthijs de Ligt", "position": "Defender" },
+            { "id": 10, "name": "Dayot Upamecano", "position": "Defender" },
+            { "id": 11, "name": "Thomas Müller", "position": "Forward" }
+          ]
+        },
+        {
+          "teamName": "BVB",
+          "players": [
+            { "id": 1, "name": "Marco Reus", "position": "Forward" },
+            { "id": 2, "name": "Julian Brandt", "position": "Midfielder" },
+            { "id": 3, "name": "Gregor Kobel", "position": "Goalkeeper" },
+            { "id": 4, "name": "Niclas Füllkrug", "position": "Forward" },
+            { "id": 5, "name": "Emre Can", "position": "Midfielder" },
+            { "id": 6, "name": "Mats Hummels", "position": "Defender" },
+            { "id": 7, "name": "Karim Adeyemi", "position": "Forward" },
+            { "id": 8, "name": "Nico Schlotterbeck", "position": "Defender" },
+            { "id": 9, "name": "Julian Ryerson", "position": "Defender" },
+            { "id": 10, "name": "Donyell Malen", "position": "Forward" },
+            { "id": 11, "name": "Marcel Sabitzer", "position": "Midfielder" }
+          ]
+        },
+        {
+          "teamName": "LAG",
+          "players": [
+            { "id": 1, "name": "Riqui Puig", "position": "Midfielder" },
+            { "id": 2, "name": "Javier Hernández", "position": "Forward" },
+            { "id": 3, "name": "Tyler Boyd", "position": "Forward" },
+            { "id": 4, "name": "Maya Yoshida", "position": "Defender" },
+            { "id": 5, "name": "Jonathan Bond", "position": "Goalkeeper" },
+            { "id": 6, "name": "Mark Delgado", "position": "Midfielder" },
+            { "id": 7, "name": "Douglas Costa", "position": "Forward" },
+            { "id": 8, "name": "Gastón Brugman", "position": "Midfielder" },
+            { "id": 9, "name": "Julian Aude", "position": "Defender" },
+            { "id": 10, "name": "Martin Cáceres", "position": "Defender" },
+            { "id": 11, "name": "Raheem Edwards", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "SSFC",
+          "players": [
+            { "id": 1, "name": "Jordan Morris", "position": "Forward" },
+            { "id": 2, "name": "Raúl Ruidíaz", "position": "Forward" },
+            { "id": 3, "name": "Stefan Frei", "position": "Goalkeeper" },
+            { "id": 4, "name": "Nicolás Lodeiro", "position": "Midfielder" },
+            { "id": 5, "name": "Cristian Roldan", "position": "Midfielder" },
+            { "id": 6, "name": "Albert Rusnák", "position": "Midfielder" },
+            { "id": 7, "name": "João Paulo", "position": "Midfielder" },
+            { "id": 8, "name": "Yeimar Gómez", "position": "Defender" },
+            { "id": 9, "name": "Alex Roldan", "position": "Defender" },
+            { "id": 10, "name": "Nouhou Tolo", "position": "Defender" },
+            { "id": 11, "name": "Jackson Ragen", "position": "Defender" }
+          ]
+        }
+      ]
+    },
+    "Basketball": {
+      "teams": [
+        {
+          "teamName": "LAL",
+          "players": [
+            { "id": 1, "name": "LeBron James", "position": "Forward" },
+            { "id": 2, "name": "Anthony Davis", "position": "Forward" },
+            { "id": 3, "name": "D'Angelo Russell", "position": "Guard" },
+            { "id": 4, "name": "Austin Reaves", "position": "Guard" },
+            { "id": 5, "name": "Rui Hachimura", "position": "Forward" }
+          ]
+        },
+        {
+          "teamName": "TOR",
+          "players": [
+            { "id": 1, "name": "Pascal Siakam", "position": "Forward" },
+            { "id": 2, "name": "Scottie Barnes", "position": "Forward" },
+            { "id": 3, "name": "OG Anunoby", "position": "Forward" },
+            { "id": 4, "name": "Dennis Schröder", "position": "Guard" },
+            { "id": 5, "name": "Jakob Poeltl", "position": "Center" }
+          ]
+        },
+        {
+          "teamName": "BOS",
+          "players": [
+            { "id": 1, "name": "Jayson Tatum", "position": "Forward" },
+            { "id": 2, "name": "Jaylen Brown", "position": "Guard" },
+            { "id": 3, "name": "Kristaps Porziņģis", "position": "Center" },
+            { "id": 4, "name": "Jrue Holiday", "position": "Guard" },
+            { "id": 5, "name": "Derrick White", "position": "Guard" }
+          ]
+        },
+        {
+          "teamName": "MIA",
+          "players": [
+            { "id": 1, "name": "Jimmy Butler", "position": "Forward" },
+            { "id": 2, "name": "Bam Adebayo", "position": "Center" },
+            { "id": 3, "name": "Tyler Herro", "position": "Guard" },
+            { "id": 4, "name": "Kyle Lowry", "position": "Guard" },
+            { "id": 5, "name": "Duncan Robinson", "position": "Forward" }
+          ]
+        },
+        {
+          "teamName": "GSW",
+          "players": [
+            { "id": 1, "name": "Stephen Curry", "position": "Guard" },
+            { "id": 2, "name": "Klay Thompson", "position": "Guard" },
+            { "id": 3, "name": "Draymond Green", "position": "Forward" },
+            { "id": 4, "name": "Andrew Wiggins", "position": "Forward" },
+            { "id": 5, "name": "Chris Paul", "position": "Guard" }
+          ]
+        },
+        {
+          "teamName": "NYK",
+          "players": [
+            { "id": 1, "name": "Jalen Brunson", "position": "Guard" },
+            { "id": 2, "name": "Julius Randle", "position": "Forward" },
+            { "id": 3, "name": "RJ Barrett", "position": "Forward" },
+            { "id": 4, "name": "Mitchell Robinson", "position": "Center" },
+            { "id": 5, "name": "Immanuel Quickley", "position": "Guard" }
+          ]
+        }
+      ]
+    },
+    "Hockey": {
+      "teams": [
+        {
+          "teamName": "CAN",
+          "players": [
+            { "id": 1, "name": "Connor McDavid", "position": "Center" },
+            { "id": 2, "name": "Nathan MacKinnon", "position": "Center" },
+            { "id": 3, "name": "Carey Price", "position": "Goalie" },
+            { "id": 4, "name": "Sidney Crosby", "position": "Center" },
+            { "id": 5, "name": "Cale Makar", "position": "Defense" },
+            { "id": 6, "name": "Brad Marchand", "position": "Left Wing" }
+          ]
+        },
+        {
+          "teamName": "SWE",
+          "players": [
+            { "id": 1, "name": "Victor Hedman", "position": "Defense" },
+            { "id": 2, "name": "William Nylander", "position": "Right Wing" },
+            { "id": 3, "name": "Gabriel Landeskog", "position": "Left Wing" },
+            { "id": 4, "name": "Elias Pettersson", "position": "Center" },
+            { "id": 5, "name": "Jacob Markström", "position": "Goalie" },
+            { "id": 6, "name": "Erik Karlsson", "position": "Defense" }
+          ]
+        },
+        {
+          "teamName": "FIN",
+          "players": [
+            { "id": 1, "name": "Sebastian Aho", "position": "Center" },
+            { "id": 2, "name": "Aleksander Barkov", "position": "Center" },
+            { "id": 3, "name": "Mikko Rantanen", "position": "Right Wing" },
+            { "id": 4, "name": "Tuukka Rask", "position": "Goalie" },
+            { "id": 5, "name": "Miro Heiskanen", "position": "Defense" },
+            { "id": 6, "name": "Patrik Laine", "position": "Right Wing" }
+          ]
+        },
+        {
+          "teamName": "RUS",
+          "players": [
+            { "id": 1, "name": "Alexander Ovechkin", "position": "Left Wing" },
+            { "id": 2, "name": "Evgeni Malkin", "position": "Center" },
+            { "id": 3, "name": "Nikita Kucherov", "position": "Right Wing" },
+            { "id": 4, "name": "Andrei Vasilevskiy", "position": "Goalie" },
+            { "id": 5, "name": "Ivan Provorov", "position": "Defense" },
+            { "id": 6, "name": "Artemi Panarin", "position": "Left Wing" }
+          ]
+        },
+        {
+          "teamName": "NOR",
+          "players": [
+            { "id": 1, "name": "Mats Zuccarello", "position": "Right Wing" },
+            { "id": 2, "name": "Andreas Martinsen", "position": "Left Wing" },
+            { "id": 3, "name": "Patrick Thoresen", "position": "Center" },
+            { "id": 4, "name": "Jonas Holøs", "position": "Defense" },
+            { "id": 5, "name": "Henrik Haukeland", "position": "Goalie" },
+            { "id": 6, "name": "Mathis Olimb", "position": "Center" }
+          ]
+        },
+        {
+          "teamName": "CZE",
+          "players": [
+            { "id": 1, "name": "David Pastrňák", "position": "Right Wing" },
+            { "id": 2, "name": "Tomáš Hertl", "position": "Center" },
+            { "id": 3, "name": "Jakub Voráček", "position": "Right Wing" },
+            { "id": 4, "name": "Vítek Vaněček", "position": "Goalie" },
+            { "id": 5, "name": "Filip Hronek", "position": "Defense" },
+            { "id": 6, "name": "Martin Nečas", "position": "Center" }
+          ]
+        }
+      ]
+    },
+    "Kabaddi": {
+      "teams": [
+        {
+          "teamName": "IRN",
+          "players": [
+            { "id": 1, "name": "Fazel Atrachali", "position": "All-Rounder" },
+            { "id": 2, "name": "Meraj Sheykh", "position": "Raider" },
+            { "id": 3, "name": "Mohammad Esmaeil", "position": "Defender" },
+            { "id": 4, "name": "Abozar Mohajermighani", "position": "Defender" },
+            { "id": 5, "name": "Mohammad Nabibakhsh", "position": "All-Rounder" },
+            { "id": 6, "name": "Amirhossein Bastami", "position": "Defender" },
+            { "id": 7, "name": "Mohsen Maghsoudlou", "position": "Raider" }
+          ]
+        },
+        {
+          "teamName": "IND",
+          "players": [
+            { "id": 1, "name": "Pawan Sehrawat", "position": "Raider" },
+            { "id": 2, "name": "Pardeep Narwal", "position": "Raider" },
+            { "id": 3, "name": "Naveen Kumar", "position": "Raider" },
+            { "id": 4, "name": "Rahul Chaudhari", "position": "Raider" },
+            { "id": 5, "name": "Deepak Hooda", "position": "All-Rounder" },
+            { "id": 6, "name": "Manjeet Chillar", "position": "All-Rounder" },
+            { "id": 7, "name": "Surender Nada", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "BAN",
+          "players": [
+            { "id": 1, "name": "Tuhin Tarafder", "position": "Raider" },
+            { "id": 2, "name": "Md Zakir Hossain", "position": "All-Rounder" },
+            { "id": 3, "name": "Sabuj Mia", "position": "Defender" },
+            { "id": 4, "name": "Mizanur Rahman", "position": "Raider" },
+            { "id": 5, "name": "Mohammad Nabiul", "position": "Defender" },
+            { "id": 6, "name": "Aslam Hossain", "position": "All-Rounder" },
+            { "id": 7, "name": "Ferdous Ahmed", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "PAK",
+          "players": [
+            { "id": 1, "name": "Muhammad Nadeem", "position": "All-Rounder" },
+            { "id": 2, "name": "Waqas Ahmad", "position": "Raider" },
+            { "id": 3, "name": "Muhammad Imran", "position": "Defender" },
+            { "id": 4, "name": "Waseem Sajjad", "position": "Raider" },
+            { "id": 5, "name": "Muhammad Safian", "position": "All-Rounder" },
+            { "id": 6, "name": "Nasir Ali", "position": "Defender" },
+            { "id": 7, "name": "Abu Bakar", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "LKA",
+          "players": [
+            { "id": 1, "name": "Thivanka Rajakaruna", "position": "Raider" },
+            { "id": 2, "name": "Dinuka Karunaratne", "position": "All-Rounder" },
+            { "id": 3, "name": "Wasantha Dassanayake", "position": "Defender" },
+            { "id": 4, "name": "Sandakelum Silva", "position": "Raider" },
+            { "id": 5, "name": "Janith Chanaka", "position": "Defender" },
+            { "id": 6, "name": "Kavinda Herath", "position": "All-Rounder" },
+            { "id": 7, "name": "Ranidu Perera", "position": "Defender" }
+          ]
+        },
+        {
+          "teamName": "NEP",
+          "players": [
+            { "id": 1, "name": "Bir Bahadur Mahara", "position": "Raider" },
+            { "id": 2, "name": "Surya Narayan Shrestha", "position": "All-Rounder" },
+            { "id": 3, "name": "Raju Lama", "position": "Defender" },
+            { "id": 4, "name": "Sanjay Lama", "position": "Raider" },
+            { "id": 5, "name": "Kumar Thapa", "position": "All-Rounder" },
+            { "id": 6, "name": "Binod Karki", "position": "Defender" },
+            { "id": 7, "name": "Rajesh Gurung", "position": "Defender" }
+          ]
+        }
+      ]
+    }
+  }
+  
