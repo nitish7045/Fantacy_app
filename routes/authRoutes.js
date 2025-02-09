@@ -535,6 +535,97 @@ router.put("/unblock/:userId", async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+//save team by all transaction
+
+router.post('/save-team/new', async (req, res) => {
+  const { userId, matchId, team, seriesName, matchTitle, matchFormat, matchDate, sportType, captain, viceCaptain } = req.body;
+  const entryFee = 40; // Deduct ₹40 per team creation
+
+  // Validate required fields
+  if (!userId || !matchId || !team || !Array.isArray(team)) {
+      return res.status(400).json({ message: 'userId, matchId, and team (array) are required' });
+  }
+
+  try {
+      // Check if the team already exists for the given matchId and userId
+      const existingTeam = await Team.findOne({ userId, matchId });
+      if (existingTeam) {
+          return res.status(400).json({ message: 'Team already saved for this match' });
+      }
+
+      // Fetch the user's wallet
+      let wallet = await Wallet.findOne({ userId });
+      if (!wallet) {
+          return res.status(404).json({ message: "Wallet not found" });
+      }
+
+      // Check if the wallet has enough balance
+      if (wallet.balance < entryFee) {
+          return res.status(400).json({ message: "Insufficient wallet balance" });
+      }
+
+      // Deduct the entry fee from the wallet balance
+      wallet.balance -= entryFee;
+      await wallet.save();
+
+      // Save transaction
+      const transaction = new Transaction({
+          userId,
+          walletId: wallet.walletId,
+          amount: entryFee,
+          transactionType: "createTeam",
+          status: "complete"
+      });
+
+      await transaction.save();
+
+      // Create a new team document
+      const newTeam = new Team({
+          userId,
+          matchId,
+          team,
+          seriesName,
+          matchTitle,
+          matchFormat,
+          matchDate,
+          sportType,
+          captain,
+          viceCaptain,
+      });
+
+      // Save the team to the database
+      await newTeam.save();
+
+      // Respond with success message and updated wallet balance
+      res.status(201).json({
+          message: 'Team saved successfully',
+          team: {
+              teamId: newTeam.teamId,
+              userId: newTeam.userId,
+              matchId: newTeam.matchId,
+              team: newTeam.team,
+              seriesName: newTeam.seriesName,
+              matchTitle: newTeam.matchTitle,
+              matchFormat: newTeam.matchFormat,
+              matchDate: newTeam.matchDate,
+              sportType: newTeam.sportType,
+              captain: newTeam.captain,
+              viceCaptain: newTeam.viceCaptain,
+          },
+          transaction: {
+              transactionId: transaction._id,
+              amount: transaction.amount,
+              type: transaction.transactionType,
+              status: transaction.status
+          },
+          newWalletBalance: wallet.balance // Return updated wallet balance
+      });
+
+  } catch (err) {
+      res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 
 // Save Team Route
 router.post('/save-team', async (req, res) => {
