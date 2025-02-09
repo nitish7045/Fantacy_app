@@ -605,6 +605,23 @@ router.get("/teams/:userId", async (req, res) => {
     }
   });
 
+  router.get("/teams/team/:teamId", async (req, res) => {
+    const { teamId } = req.params;
+
+    try {
+        const team = await Team.findOne({ teamId });
+
+        if (!team) {
+            return res.status(404).json({ message: "Team not found" });
+        }
+
+        res.status(200).json({ team });
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+});
+
+
   // ✅ Fetch ALL Transactions (No Limit)
 router.get("/all-transactions", async (req, res) => {
     try {
