@@ -14,6 +14,50 @@ const CricketMatch =require("../models/CricketMatch");
 const MatchResults = require('../models/MatchResults');
 // const MatchResults =require("../models/MatchResult");
 
+
+// Wallet Recharge Route
+router.post('/wallet/recharge', async (req, res) => {
+  const { userId, amount } = req.body;
+
+  // Validate input
+  if (!userId || !amount || amount <= 0) {
+      return res.status(400).json({ message: 'Invalid userId or amount' });
+  }
+
+  try {
+      // Find the wallet for the user
+      let wallet = await Wallet.findOne({ userId });
+
+      if (!wallet) {
+          return res.status(404).json({ message: 'Wallet not found' });
+      }
+
+      // Update Wallet Balance
+      wallet.balance += amount;
+      await wallet.save();
+
+      // Create a new Transaction Record
+      const transaction = new Transaction({
+          userId,
+          walletId: wallet.walletId,
+          amount,
+          transactionType: 'recharge',
+          status: 'complete'
+      });
+
+      await transaction.save();
+
+      return res.status(200).json({ 
+          message: 'Wallet recharged successfully', 
+          newBalance: wallet.balance 
+      });
+
+  } catch (error) {
+      console.error('Error processing recharge:', error);
+      return res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // GET all match results with players' points
 router.get('/all-match-results', async (req, res) => {
     try {
