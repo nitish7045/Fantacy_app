@@ -927,6 +927,65 @@ router.post('/transaction', async (req, res) => {
     }
   });
   
-  
+  // Register Route
+router.post("/register/new", async (req, res) => {
+  const { fullName, email, phone, password, avatar, age } = req.body;
+
+  if (!fullName || !email || !phone || !password || !age) {
+    return res.status(400).json({ message: "All fields except avatar are required" });
+  }
+
+  try {
+    // Convert email to lowercase
+    const emailLowercase = email.toLowerCase();
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email: emailLowercase });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already registered" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
+      fullName,
+      email: emailLowercase,
+      phone,
+      password: hashedPassword,
+      avatar: avatar || "",
+      age,
+    });
+
+    await newUser.save();
+
+    // Create wallet for the user with ₹200 bonus
+    const newWallet = new Wallet({
+      userId: newUser.userId, // Use the newly created user's ID
+      balance: 200, // Bonus balance
+    });
+
+    await newWallet.save();
+
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        userId: newUser.userId,
+        fullName: newUser.fullName,
+        email: newUser.email,
+        phone: newUser.phone,
+        avatar: newUser.avatar,
+        age: newUser.age,
+      },
+      wallet: {
+        walletId: newWallet.walletId,
+        balance: newWallet.balance,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 
 module.exports = router;
