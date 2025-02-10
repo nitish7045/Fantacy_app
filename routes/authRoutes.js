@@ -424,6 +424,16 @@ router.post("/register", async (req, res) => {
     // Hash password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    await newUser.save();
+
+    // Create wallet for the user with ₹200 bonus
+    const newWallet = new Wallet({
+      userId: newUser._id, // Use the newly created user's ID
+      balance: 200, // Bonus balance
+    });
+
+    await newWallet.save();
+
     const newUser = new User({
       fullName,
       email: emailLowercase, // Save email in lowercase
