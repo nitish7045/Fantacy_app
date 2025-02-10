@@ -424,16 +424,7 @@ router.post("/register", async (req, res) => {
     // Hash password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await newUser.save();
-
-    // Create wallet for the user with ₹200 bonus
-    const newWallet = new Wallet({
-      userId: newUser._id, // Use the newly created user's ID
-      balance: 200, // Bonus balance
-    });
-
-    await newWallet.save();
-
+    // Create a new user
     const newUser = new User({
       fullName,
       email: emailLowercase, // Save email in lowercase
@@ -443,8 +434,19 @@ router.post("/register", async (req, res) => {
       age, // Save age
     });
 
+    // Save the user to the database
     await newUser.save();
 
+    // Create wallet for the user with ₹200 bonus
+    const newWallet = new Wallet({
+      userId: newUser.userId, // Use the newly created user's ID
+      balance: 200, // Bonus balance
+    });
+
+    // Save the wallet to the database
+    await newWallet.save();
+
+    // Send the response
     res.status(201).json({
       message: "User registered successfully",
       user: {
@@ -454,14 +456,16 @@ router.post("/register", async (req, res) => {
         phone: newUser.phone,
         avatar: newUser.avatar,
         age: newUser.age, // Return the age
-        // createdAt: moment(newUser.createdAt).tz("Asia/Kolkata").format(),
+      },
+      wallet: {
+        walletId: newWallet.walletId,
+        balance: newWallet.balance,
       },
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
-
 // Login Route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
