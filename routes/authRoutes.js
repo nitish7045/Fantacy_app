@@ -12,6 +12,7 @@ const Admin = require('../models/admin');
 const FootballMatch = require("../models/FootballMatch");
 const CricketMatch =require("../models/CricketMatch");
 const MatchResults = require('../models/MatchResults');
+const team = require("../models/team");
 // const MatchResults =require("../models/MatchResult");
 
 
@@ -754,6 +755,8 @@ router.get("/teams/:userId", async (req, res) => {
     }
   });
 
+  //get all the team by team id
+
   router.get("/teams/team/:teamId", async (req, res) => {
     const { teamId } = req.params;
 
@@ -765,6 +768,23 @@ router.get("/teams/:userId", async (req, res) => {
         }
 
         res.status(200).json({ team });
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+});
+  //get all the team by match id
+
+  router.get("/teams/team/matchid/:matchId", async (req, res) => {
+    const { matchId } = req.params;
+
+    try {
+        const matchw = await Team.find({ matchId });
+
+        if (!matchw) {
+            return res.status(404).json({ message: "match not found" });
+        }
+
+        res.status(200).json({ matchw });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
